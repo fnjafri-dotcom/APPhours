@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WPH Cares — APP Analytics</title>
+<style>
+  :root{
+    --ink:#12232e; --soft:#4a616e; --faint:#7c909b;
+    --line:#d6dfe3; --hair:#e9eef0; --paper:#eef2f3;
+    --teal:#0f7d84; --teal-deep:#0a5a60; --wash:#eef5f5;
+    --amber:#c98a12;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:var(--paper); line-height:1.5;
+    min-height:100vh; padding:48px 20px 64px;
+    font-feature-settings:"tnum" 1,"lnum" 1;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  header{margin-bottom:34px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);font-weight:700}
+  h1{font-size:30px;font-weight:700;letter-spacing:-.015em;line-height:1.12;margin-top:8px}
+  .lead{font-size:14.5px;color:var(--soft);margin-top:10px;max-width:56ch}
+  .rule{height:2px;background:var(--ink);margin-top:20px}
+
+  .grid{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+
+  a.card{
+    display:block;text-decoration:none;color:inherit;
+    background:#fff;border:1px solid var(--line);border-radius:13px;
+    padding:20px 22px;position:relative;overflow:hidden;
+    box-shadow:0 1px 2px rgba(18,35,46,.04);
+    transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+  }
+  a.card:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(18,35,46,.10);border-color:#c3d2d8}
+  a.card:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  a.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
+  a.card.feat::before{background:var(--amber)}
+
+  .card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .card-top h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .tag{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:var(--wash);color:var(--teal-deep)}
+  .tag.live{background:#fbf3e2;color:var(--amber)}
+  .card p{font-size:13px;color:var(--soft);max-width:60ch}
+  .go{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--teal);margin-top:12px;letter-spacing:.02em}
+  .go svg{width:13px;height:13px}
+
+  footer{margin-top:34px;font-size:11px;color:var(--faint);line-height:1.6;border-top:1px solid var(--hair);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">White Plains Hospital · Montefiore Health System</div>
+    <h1>WPH Cares — APP Analytics</h1>
+    <p class="lead">Operational dashboards and capacity models for the Transitional Care &amp; Population Health advanced-practice team. Select a report.</p>
+    <div class="rule"></div>
+  </header>
+
+  <nav class="grid">
+
+    <a class="card feat" href="APP_Capacity_OnePager_Interactive_2026.html">
+      <div class="card-top">
+        <h2>Capacity Assessment — Interactive</h2>
+        <span class="tag live">Live model</span>
+      </div>
+      <p>Answers "how capped is the team?" Move the levers — FTE, productive hours, patients/hr, per diem shifts — and toggle attempts vs. contacts to see utilization recalculate against total APP capacity.</p>
+      <span class="go">Open model
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card" href="APP_Capacity_OnePager_2026.html">
+      <div class="card-top">
+        <h2>Capacity Assessment — One-Pager</h2>
+        <span class="tag">Print / PDF</span>
+      </div>
+      <p>The fixed single-page leave-behind version of the capacity analysis. Print-optimized for a clean one-page PDF to hand to leadership.</p>
+      <span class="go">Open one-pager
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card" href="CallTime_Utilization_2026.html">
+      <div class="card-top">
+        <h2>Call-Time Utilization</h2>
+        <span class="tag">Dashboard</span>
+      </div>
+      <p>Outreach volume, contact rates, and call-duration utilization by hour across the APP team, drawn from the 2026 Power BI export.</p>
+      <span class="go">Open dashboard
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+  </nav>
+
+  <footer>
+    WPH Cares · Transitional Care &amp; Population Health · Internal analytics. Figures are planning estimates, not billing records. Data period: 2026.
+  </footer>
+
+</div>
+</body>
+</html>
