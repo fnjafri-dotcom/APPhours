@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APP Team Staffing Analysis — June 2026</title>
+<style>
+  :root{
+    --ink:#12232e; --soft:#4a616e; --faint:#8496a0;
+    --line:#dbe3e7; --hair:#eef2f4; --paper:#eff3f4;
+    --teal:#0f7d84; --teal-deep:#0a5a60; --wash:#eef5f5;
+    --amber:#c98a12; --amber-wash:#fbf3e2; --red:#c0473b; --green:#2f8f5b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.5;
+    font-feature-settings:"tnum" 1,"lnum" 1;padding:34px 18px 60px;
+  }
+  .page{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;
+    box-shadow:0 4px 24px rgba(18,35,46,.10);padding:30px 34px 28px}
+  @media(max-width:640px){.page{padding:24px 20px}}
+
+  .eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:700}
+  h1{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-top:4px}
+  .date{font-size:12px;color:var(--faint);margin-top:2px}
+
+  .answer{margin:22px 0 0;padding:20px 0 18px;border-top:2px solid var(--ink);border-bottom:1px solid var(--hair)}
+  .answer .head{font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.3}
+
+  .math{margin-top:16px}
+  .mrow{display:flex;align-items:baseline;gap:14px;padding:8px 0;border-bottom:1px solid var(--hair)}
+  .mrow:last-child{border-bottom:none}
+  .mrow .ml{font-size:13.5px;color:var(--soft);flex:1}
+  .mrow .mv{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mrow.hi .ml{color:var(--ink);font-weight:600}
+  .mrow small{display:block;font-size:11px;color:var(--faint);line-height:1.4;margin-top:1px}
+
+  .barwrap{margin:18px 0 4px}
+  .track{position:relative;height:28px;background:var(--hair);border-radius:8px}
+  .fill{position:absolute;top:0;left:0;height:100%;border-radius:8px;transition:width .3s,background .3s}
+  .capline{position:absolute;top:-7px;bottom:-7px;left:70%;width:2px;background:var(--ink);opacity:.65}
+  .capflag{position:absolute;top:-20px;transform:translateX(-50%);font-size:9.5px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
+  .barlbl{display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--soft)}
+  .barlbl b{color:var(--ink)}
+
+  section{margin-top:26px;padding-top:18px;border-top:1px solid var(--hair)}
+  .stitle{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:15px}
+  .stitle span{color:var(--teal);text-transform:none;letter-spacing:0;font-weight:600;font-size:11px}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:600px){.duo{grid-template-columns:1fr}}
+  .ctrl{margin-bottom:18px}
+  .ctrl:last-child{margin-bottom:0}
+  .ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .ch label{font-size:13px;font-weight:600}
+  .ch .cv{font-size:14.5px;font-weight:700;color:var(--teal-deep)}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:4px;background:var(--line);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;
+    background:var(--teal);border:3px solid #fff;box-shadow:0 1px 5px rgba(15,125,132,.45);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:var(--teal);
+    border:3px solid #fff;box-shadow:0 1px 5px rgba(15,125,132,.45);cursor:pointer}
+  .marks{display:flex;justify-content:space-between;margin-top:6px}
+  .marks span{font-size:10px;color:var(--faint);cursor:pointer;text-align:center;line-height:1.3}
+  .marks span b{display:block;color:var(--teal);font-weight:700;text-decoration:underline;text-underline-offset:2px;font-size:10.5px}
+  .marks span.t b{color:var(--amber)}
+
+  /* trend chart */
+  .chart{margin-top:4px}
+  .bars{display:flex;align-items:flex-end;gap:2px;height:88px;padding-top:14px}
+  .bars .col{flex:1;position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+  .bars .bar{width:100%;border-radius:2px 2px 0 0;background:var(--wash);transition:background .15s}
+  .bars .col.y25 .bar{background:#bcd9db}
+  .bars .col.y26 .bar{background:var(--teal)}
+  .bars .col:hover .bar{background:var(--amber)}
+  .bars .col .tip{position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;
+    color:var(--ink);opacity:0;transition:opacity .15s;white-space:nowrap;pointer-events:none}
+  .bars .col:hover .tip{opacity:1}
+  .xaxis{display:flex;justify-content:space-between;margin-top:6px;font-size:9.5px;color:var(--faint)}
+  .legend{display:flex;gap:16px;margin-top:12px;font-size:11px;color:var(--soft);flex-wrap:wrap}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .legend b{color:var(--ink)}
+  .trendnote{font-size:12px;color:var(--soft);line-height:1.55;margin-top:12px}
+  .trendnote b{color:var(--ink)}
+
+  .pdstat{background:var(--wash);border-radius:8px;padding:11px 13px;font-size:11.5px;color:var(--soft);line-height:1.5;margin-top:4px}
+  .pdstat b{color:var(--ink)}
+
+  .note{font-size:12px;color:var(--soft);line-height:1.55;margin-top:22px;padding:13px 15px;
+    background:var(--amber-wash);border:1px solid #ecd9ad;border-radius:9px}
+  .note b{color:var(--ink)}
+  .note .nt{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:6px}
+  .note ul{margin:5px 0 0 15px}
+  .note li{margin-bottom:3px}
+
+  .foot{font-size:9.5px;color:var(--faint);margin-top:18px;padding-top:13px;border-top:1px solid var(--hair);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="eyebrow">WPH Cares · Transitional Care</div>
+  <h1>APP Team Staffing Analysis</h1>
+  <div class="date">June 2026 · core APPs + per diem pool</div>
+
+  <div class="answer">
+    <div class="head" id="headline">—</div>
+  </div>
+
+  <div class="math">
+    <div class="mrow">
+      <div class="ml">What the team <b>can</b> do<small id="capDetail">—</small></div>
+      <div class="mv" id="capVal">—</div>
+    </div>
+    <div class="mrow">
+      <div class="ml">What the team <b>is</b> doing<small>1,120 recorded + ~65 paramedic calls not in Power BI</small></div>
+      <div class="mv" id="actVal">274</div>
+    </div>
+    <div class="mrow hi">
+      <div class="ml">Utilization</div>
+      <div class="mv" id="utilVal">—</div>
+    </div>
+  </div>
+
+  <div class="barwrap">
+    <div class="track">
+      <div class="fill" id="fill"></div>
+      <div class="capline"><span class="capflag">CAPACITY</span></div>
+    </div>
+    <div class="barlbl"><span>0</span><span>per week · <b id="barNum">274</b> of <b id="barCap">203</b></span></div>
+  </div>
+
+  <!-- STAFFING — TOP -->
+  <section>
+    <div class="stitle">Core staffing</div>
+    <div class="duo">
+      <div class="ctrl">
+        <div class="ch"><label>Core APP FTE</label><span class="cv" id="vFte">4.0</span></div>
+        <input type="range" id="fte" min="2" max="9" step="0.5" value="4">
+        <div class="marks">
+          <span data-f="4"><b>4.0</b>today</span>
+          <span data-f="5.5"><b>5.5</b>+1.5</span>
+          <span data-f="7"><b>7.0</b>+3</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <div class="ch"><label>Patients per hour</label><span class="cv" id="vRate">1.5</span></div>
+        <input type="range" id="rate" min="1" max="3" step="0.1" value="1.5">
+        <div class="marks">
+          <span data-r="1.5"><b>1.5</b>standard</span>
+          <span data-r="2.1"><b>2.1</b>achieved</span>
+          <span data-r="2.5" class="t"><b>2.5</b>target</span>
+        </div>
+      </div>
+    </div>
+    <div class="ctrl" style="margin-top:18px">
+      <div class="ch"><label>Productive hours per week</label><span class="cv" id="vHours">30.2</span></div>
+      <input type="range" id="hours" min="24" max="40" step="0.2" value="30.2">
+      <div class="marks">
+        <span data-h="30.2"><b>30.2</b>2026 staffing model</span>
+        <span data-h="40"><b>40</b>gross paid hours</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDS — MIDDLE -->
+  <section>
+    <div class="stitle">Volume trend — <span>monthly referrals, hover for detail</span></div>
+    <div class="chart">
+      <div class="bars" id="bars"></div>
+      <div class="xaxis"><span>Jan 2024</span><span>Jan 2025</span><span>Jan 2026</span><span>Jun 2026</span></div>
+      <div class="legend">
+        <span><i style="background:var(--wash)"></i>2024 · avg <b>177</b>/mo</span>
+        <span><i style="background:#bcd9db"></i>2025 · avg <b>222</b>/mo</span>
+        <span><i style="background:var(--teal)"></i>2026 · avg <b>262</b>/mo</span>
+      </div>
+      <p class="trendnote">Referrals have climbed every year — <b>177 → 222 → 262</b> per month, up <b>48% since 2024</b>. Outreach output rose <b>1,061 → 1,120</b> from May to June with contact rate improving <b>68% → 72%</b>. The team is absorbing the growth by working faster, not by having more hours.</p>
+    </div>
+  </section>
+
+  <!-- PER DIEM — BOTTOM -->
+  <section>
+    <div class="stitle">Per diem pool</div>
+    <div class="duo">
+      <div class="ctrl">
+        <div class="ch"><label>Per diem staff</label><span class="cv" id="vPd">4</span></div>
+        <input type="range" id="pd" min="0" max="8" step="1" value="4">
+      </div>
+      <div class="ctrl">
+        <div class="ch"><label>Shifts per month each</label><span class="cv" id="vShifts">2</span></div>
+        <input type="range" id="shifts" min="0" max="8" step="1" value="2">
+      </div>
+    </div>
+    <div class="ctrl" style="margin-top:4px">
+      <div class="ch"><label>Shift length (hours)</label><span class="cv" id="vSlen">8</span></div>
+      <input type="range" id="slen" min="4" max="12" step="1" value="8">
+    </div>
+    <div class="pdstat" id="pdStat">—</div>
+  </section>
+
+  <div class="note">
+    <div class="nt">Why this is the low estimate</div>
+    Two kinds of real work aren't fully counted:
+    <ul>
+      <li><b>Paramedic escalations</b> come by cell phone (~3/day) and never enter Power BI.</li>
+      <li><b>The medical director is covering shifts</b> — 58 calls in June.</li>
+    </ul>
+    <div style="margin-top:7px">The true utilization is <b>higher</b> than this page shows.</div>
+  </div>
+
+  <div class="foot">
+    Capacity = (core FTE + per diem FTE-equivalent) × productive hours × patients per hour. Volume from Power BI CallTime export, June 2026, all staff. Referrals from Total Referrals report; June 2026 restated to 276 from an earlier partial figure. Weekly = monthly ÷ 4.33. Uncaptured escalations estimated at 3/day × 21.7 workdays. Planning estimates, not billing records.
+  </div>
+
+</div>
+
+<script>
+  const WK = 4.33, WORKDAYS = 21.7;
+  const RECORDED = 1120, HIDDEN = Math.round(3 * WORKDAYS);
+  const VOL = RECORDED + HIDDEN;
+  const NONCORE = 200;
+
+  const REF = [125,140,130,129,133,160,216,216,195,226,199,251,
+               310,180,199,138,243,220,258,211,226,229,206,241,
+               225,274,273,250,273,276];
+  const LBL = [];
+  ["24","25","26"].forEach(y=>{
+    const n = y==="26" ? 6 : 12;
+    for(let m=1;m<=n;m++) LBL.push(`${y}-${String(m).padStart(2,"0")}`);
+  });
+
+  let s = {fte:4, rate:1.5, hours:30.2, pd:4, shifts:2, slen:8};
+  const $ = i => document.getElementById(i);
+  const r0 = n => Math.round(n);
+
+  // build trend chart
+  const MAX = Math.max(...REF);
+  $("bars").innerHTML = REF.map((v,i)=>{
+    const yr = LBL[i].slice(0,2);
+    return `<div class="col y${yr}"><span class="tip">${v}</span>`+
+           `<div class="bar" style="height:${v/MAX*100}%"></div></div>`;
+  }).join("");
+  document.querySelectorAll("#bars .col").forEach((c,i)=>{
+    c.title = `${LBL[i]} · ${REF[i]} referrals`;
+  });
+
+  function render(){
+    const pdHrsWk = (s.pd * s.shifts * s.slen) / WK;
+    const pdFte = pdHrsWk / s.hours;
+    const totFte = s.fte + pdFte;
+    const cap = totFte * s.hours * s.rate;
+    const act = VOL / WK;
+    const util = act / cap;
+
+    let color, word;
+    if(util > 1.05){ color="var(--red)"; word=`<b style="color:var(--red)">over capacity</b>`; }
+    else if(util >= 0.90){ color="var(--amber)"; word=`<b style="color:var(--amber)">at capacity</b>`; }
+    else if(util >= 0.70){ color="var(--teal)"; word=`<b style="color:var(--teal-deep)">near capacity</b>`; }
+    else { color="var(--green)"; word=`<b style="color:var(--green)">room to grow</b>`; }
+    $("headline").innerHTML = `The team is ${word} — doing ${r0(act)} a week against a ceiling of ${r0(cap)}.`;
+
+    $("capDetail").textContent = `${totFte.toFixed(1)} FTE (${s.fte.toFixed(1)} core + ${pdFte.toFixed(1)} per diem) × ${s.hours.toFixed(1)} hr × ${s.rate.toFixed(1)}/hr`;
+    $("capVal").textContent = r0(cap);
+    $("actVal").textContent = r0(act);
+    $("utilVal").textContent = r0(util*100) + "%";
+    $("utilVal").style.color = color;
+
+    const trackMax = cap / 0.70;
+    $("fill").style.width = Math.min(act/trackMax*100,100) + "%";
+    $("fill").style.background = color;
+    $("barNum").textContent = r0(act);
+    $("barCap").textContent = r0(cap);
+
+    const modeledMo = pdHrsWk * s.rate * WK;
+    const gap = NONCORE - modeledMo;
+    $("pdStat").innerHTML = `Adds <b>${pdFte.toFixed(1)} FTE</b> (~${r0(pdHrsWk)} hr/wk, <b>${r0(modeledMo)}</b> patients/month). ` +
+      (gap > 5
+        ? `But non-core staff actually delivered <b>${NONCORE}</b> in June — <b style="color:var(--amber)">${r0(gap)} more than these settings model</b>. The pool is working more shifts than contracted, running faster than ${s.rate.toFixed(1)}/hr, or both.`
+        : `Non-core staff delivered <b>${NONCORE}</b> in June.`);
+  }
+
+  function bind(id,key,vid,dec){
+    $(id).addEventListener("input",e=>{
+      s[key]=parseFloat(e.target.value);
+      $(vid).textContent = dec ? s[key].toFixed(dec) : s[key];
+      render();
+    });
+  }
+  bind("fte","fte","vFte",1); bind("rate","rate","vRate",1); bind("hours","hours","vHours",1);
+  bind("pd","pd","vPd",0); bind("shifts","shifts","vShifts",0); bind("slen","slen","vSlen",0);
+
+  document.querySelectorAll(".marks span").forEach(m=>m.addEventListener("click",()=>{
+    if(m.dataset.f){ s.fte=parseFloat(m.dataset.f); $("fte").value=s.fte; $("vFte").textContent=s.fte.toFixed(1); }
+    if(m.dataset.r){ s.rate=parseFloat(m.dataset.r); $("rate").value=s.rate; $("vRate").textContent=s.rate.toFixed(1); }
+    if(m.dataset.h){ s.hours=parseFloat(m.dataset.h); $("hours").value=s.hours; $("vHours").textContent=s.hours.toFixed(1); }
+    render();
+  }));
+
+  render();
+</script>
+</body>
+</html>
