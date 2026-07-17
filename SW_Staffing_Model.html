@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Work Staffing Model — 2027 Budget</title>
+<style>
+  :root{
+    --ink:#12232e; --soft:#4a616e; --faint:#8496a0;
+    --line:#dbe3e7; --hair:#eef2f4; --paper:#eff3f4;
+    --plum:#6b4c8a; --plum-deep:#4e3766; --wash:#f0ebf5;
+    --teal:#0f7d84; --teal-deep:#0a5a60;
+    --amber:#c98a12; --amber-wash:#fbf3e2; --red:#c0473b; --green:#2f8f5b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.5;
+    font-feature-settings:"tnum" 1,"lnum" 1;padding:34px 18px 60px;
+  }
+  .page{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;
+    box-shadow:0 4px 24px rgba(18,35,46,.10);padding:30px 34px 28px}
+  @media(max-width:640px){.page{padding:24px 20px}}
+
+  .eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--plum);font-weight:700}
+  h1{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-top:4px}
+  .date{font-size:12px;color:var(--faint);margin-top:2px}
+
+  .years{display:flex;gap:6px;margin-top:18px}
+  .years button{flex:1;padding:9px 6px;font-size:13px;font-weight:700;font-family:inherit;
+    border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:8px;cursor:pointer;transition:all .15s}
+  .years button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .years button small{display:block;font-size:9.5px;font-weight:600;opacity:.7;letter-spacing:.03em}
+
+  .answer{margin:16px 0 0;padding:20px 0 18px;border-top:2px solid var(--ink);border-bottom:1px solid var(--hair)}
+  .answer .head{font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.3}
+
+  .math{margin-top:16px}
+  .mrow{display:flex;align-items:baseline;gap:14px;padding:8px 0;border-bottom:1px solid var(--hair)}
+  .mrow:last-child{border-bottom:none}
+  .mrow .ml{font-size:13.5px;color:var(--soft);flex:1}
+  .mrow .mv{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mrow.hi .ml{color:var(--ink);font-weight:600}
+  .mrow small{display:block;font-size:11px;color:var(--faint);line-height:1.4;margin-top:1px}
+
+  .barwrap{margin:18px 0 4px}
+  .track{position:relative;height:28px;background:var(--hair);border-radius:8px}
+  .fill{position:absolute;top:0;left:0;height:100%;border-radius:8px;transition:width .3s,background .3s}
+  .capline{position:absolute;top:-7px;bottom:-7px;left:70%;width:2px;background:var(--ink);opacity:.65}
+  .capflag{position:absolute;top:-20px;transform:translateX(-50%);font-size:9.5px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
+  .barlbl{display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;color:var(--soft)}
+  .barlbl b{color:var(--ink)}
+
+  section{margin-top:26px;padding-top:18px;border-top:1px solid var(--hair)}
+  .stitle{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:15px}
+  .stitle span{color:var(--plum);text-transform:none;letter-spacing:0;font-weight:600;font-size:11px}
+
+  .seg{display:flex;gap:6px;margin-bottom:16px}
+  .seg button{flex:1;padding:8px 6px;font-size:11.5px;font-weight:600;font-family:inherit;
+    border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:8px;cursor:pointer;transition:all .15s}
+  .seg button.on{background:var(--plum);border-color:var(--plum);color:#fff}
+  .seghint{font-size:10.5px;color:var(--faint);margin:-10px 0 16px;line-height:1.4}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:600px){.duo{grid-template-columns:1fr}}
+  .trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  @media(max-width:600px){.trio{grid-template-columns:1fr}}
+  .ctrl{margin-bottom:18px}
+  .ctrl:last-child{margin-bottom:0}
+  .ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .ch label{font-size:13px;font-weight:600}
+  .ch .cv{font-size:14.5px;font-weight:700;color:var(--plum-deep)}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:4px;background:var(--line);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;
+    background:var(--plum);border:3px solid #fff;box-shadow:0 1px 5px rgba(107,76,138,.45);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:var(--plum);
+    border:3px solid #fff;box-shadow:0 1px 5px rgba(107,76,138,.45);cursor:pointer}
+  .marks{display:flex;justify-content:space-between;margin-top:6px}
+  .marks span{font-size:10px;color:var(--faint);cursor:pointer;text-align:center;line-height:1.3}
+  .marks span b{display:block;color:var(--plum);font-weight:700;text-decoration:underline;text-underline-offset:2px;font-size:10.5px}
+
+  .bars{display:flex;align-items:flex-end;gap:12px;height:92px;padding-top:16px}
+  .bcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+  .bar{width:100%;border-radius:3px 3px 0 0;background:var(--wash);position:relative}
+  .bar.cur{background:var(--plum)}
+  .capmark{position:absolute;left:-2px;right:-2px;height:2px;background:var(--red);opacity:.85}
+  .capmark span{position:absolute;right:0;top:-13px;font-size:8.5px;font-weight:700;color:var(--red);white-space:nowrap}
+  .bcol .lab{position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:var(--ink)}
+  .xaxis{display:flex;gap:12px;margin-top:7px}
+  .xaxis span{flex:1;text-align:center;font-size:10px;color:var(--faint);font-weight:600}
+  .trendnote{font-size:12px;color:var(--soft);line-height:1.55;margin-top:12px}
+  .trendnote b{color:var(--ink)}
+
+  .stat{background:var(--wash);border-radius:8px;padding:11px 13px;font-size:11.5px;color:var(--soft);line-height:1.5;margin-top:12px}
+  .stat b{color:var(--ink)}
+  .stat.teal{background:#eef5f5}
+
+  .note{font-size:12px;color:var(--soft);line-height:1.55;margin-top:22px;padding:13px 15px;
+    background:var(--amber-wash);border:1px solid #ecd9ad;border-radius:9px}
+  .note b{color:var(--ink)}
+  .note .nt{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:6px}
+  .note ul{margin:5px 0 0 15px}
+  .note li{margin-bottom:4px}
+
+  .foot{font-size:9.5px;color:var(--faint);margin-top:18px;padding-top:13px;border-top:1px solid var(--hair);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="eyebrow">WPH Cares · Transitional Care</div>
+  <h1>Social Work Staffing Model</h1>
+  <div class="date">2027 budget ask · ED outreach absorption</div>
+
+  <div class="years" id="yearSeg">
+    <button data-y="2026" class="on">2026<small>baseline</small></button>
+    <button data-y="2027">2027<small>budget year</small></button>
+    <button data-y="2028">2028<small>projection</small></button>
+  </div>
+
+  <div class="answer">
+    <div class="head" id="headline">—</div>
+  </div>
+
+  <div class="math">
+    <div class="mrow">
+      <div class="ml">ED calls SW should cover<small id="demDetail">—</small></div>
+      <div class="mv" id="demVal">—</div>
+    </div>
+    <div class="mrow">
+      <div class="ml">What current SW can cover<small id="supDetail">—</small></div>
+      <div class="mv" id="supVal">—</div>
+    </div>
+    <div class="mrow hi">
+      <div class="ml">Coverage</div>
+      <div class="mv" id="utilVal">—</div>
+    </div>
+  </div>
+
+  <div class="barwrap">
+    <div class="track">
+      <div class="fill" id="fill"></div>
+      <div class="capline"><span class="capflag">SW CAPACITY</span></div>
+    </div>
+    <div class="barlbl"><span>0</span><span>ED calls/week · <b id="barDem">—</b> needed of <b id="barSup">—</b> coverable</span></div>
+  </div>
+
+  <!-- POLICY -->
+  <section>
+    <div class="stitle">Policy</div>
+    <div class="seg" id="polSeg">
+      <button data-p="B" class="on">Scale with ED volume</button>
+      <button data-p="A">Hold at current headcount</button>
+    </div>
+    <div class="seghint" id="polHint">SW grows to hold its 4.4% share of ED coverage as volume rises.</div>
+  </section>
+
+  <!-- SW TEAM -->
+  <section>
+    <div class="stitle">Social Work team</div>
+    <div class="trio">
+      <div class="ctrl">
+        <div class="ch"><label>SW FTE</label><span class="cv" id="vFte">2.0</span></div>
+        <input type="range" id="fte" min="0" max="8" step="0.5" value="2">
+      </div>
+      <div class="ctrl">
+        <div class="ch"><label>Cases per day</label><span class="cv" id="vCases">10</span></div>
+        <input type="range" id="cases" min="4" max="20" step="1" value="10">
+        <div class="marks"><span data-c="8"><b>8</b>low end</span><span data-c="10"><b>10</b>model</span></div>
+      </div>
+      <div class="ctrl">
+        <div class="ch"><label>Days per week</label><span class="cv" id="vDays">3</span></div>
+        <input type="range" id="days" min="1" max="5" step="1" value="3">
+        <div class="marks"><span data-d="3"><b>3</b>Tue/Wed/Thu</span></div>
+      </div>
+    </div>
+    <div class="stat" id="teamStat">—</div>
+  </section>
+
+  <!-- VOLUME -->
+  <section>
+    <div class="stitle">ED callable volume — <span>patients reachable per week</span></div>
+    <div class="bars" id="bars"></div>
+    <div class="xaxis"><span>2026</span><span>2027</span><span>2028</span></div>
+    <p class="trendnote" id="trendNote">—</p>
+  </section>
+
+  <!-- RN IMPACT -->
+  <section>
+    <div class="stitle">Effect on the RN team</div>
+    <div class="stat teal" id="rnStat">—</div>
+  </section>
+
+  <div class="note">
+    <div class="nt">What this rests on</div>
+    <ul>
+      <li><b>SW covers ED outreach only</b>, inside the shared RN/SW pool. IP outreach is entirely RN.</li>
+      <li>The <b>10 cases/day × 3 days/week</b> figure sets SW capacity at 30 calls/wk per FTE. Your notes say SW and the Clinical Pharmacist are <b>currently doing 8–10 per day</b> — at 8, capacity drops to 24/wk per FTE and the ask grows.</li>
+      <li>The <b>Clinical Pharmacist absorbs a further 30 ED calls/wk</b> and is confirmed still active. If that ends, the RN team absorbs it.</li>
+      <li>SW's <b>4.4% share of ED coverage</b> is anchored to the 2026 baseline — it is a status-quo assumption, not a target anyone set.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Reproduces the SW Model tab of WPH_Cares_2027_RN_SW_Staffing_Model.xlsx: Policy B gives 2.068 SW FTE for 2027 (+0.068) and 2.233 for 2028 (+0.233). ED Treat-and-Release baseline 6,200/mo, home-eligible ratio 95.7%, growth 3.38% (2027) and 7.99% (2028) from Facilities Projections V2026-03-23. Months→weeks factor 0.2308 (12/52). Excludes PTO and the VM Nurse. Planning estimates, not billing records.
+  </div>
+
+</div>
+
+<script>
+  const M2W = 0.230769230769231;
+  const ED_HOME = 0.957203528258739;
+  const ED_BASE = 6200;
+  const EDg = {2027:0.0337724519337075, 2028:0.0799018873078232};
+  const CP_ABS = 30, ED_RATE = 8, FT_H = 30.2;
+  const SW_CUR = 2, BASE_ABS = 60;
+
+  const EDraw = {2026:ED_BASE};
+  EDraw[2027] = EDraw[2026]*(1+EDg[2027]);
+  EDraw[2028] = EDraw[2027]*(1+EDg[2028]);
+  const edCallable = y => EDraw[y]*ED_HOME*M2W;
+  const SHARE = BASE_ABS / edCallable(2026);   // 4.381%
+
+  let s = {year:2026, pol:"B", fte:2, cases:10, days:3};
+  const $ = i => document.getElementById(i);
+  const r0 = n => Math.round(n);
+  const r1 = n => n.toFixed(1);
+  const r2 = n => n.toFixed(2);
+
+  function ratePerFte(){ return s.cases * s.days; }   // calls/wk per FTE
+
+  function calc(y){
+    const callable = edCallable(y);
+    const target = s.pol==="B" ? SHARE * callable : BASE_ABS;
+    const rate = ratePerFte();
+    const capacity = s.fte * rate;
+    const fteNeeded = rate>0 ? target/rate : 0;
+    return {callable, target, capacity, rate, fteNeeded, newFte: fteNeeded - s.fte};
+  }
+
+  function render(){
+    const c = calc(s.year);
+    const util = c.capacity>0 ? c.target/c.capacity : 0;
+
+    let color, word;
+    if(util > 1.05){ color="var(--red)"; word=`<b style="color:var(--red)">short</b>`; }
+    else if(util >= 0.95){ color="var(--amber)"; word=`<b style="color:var(--amber)">fully committed</b>`; }
+    else if(util >= 0.70){ color="var(--plum)"; word=`<b style="color:var(--plum-deep)">adequately staffed</b>`; }
+    else { color="var(--green)"; word=`<b style="color:var(--green)">under-committed</b>`; }
+
+    $("headline").innerHTML = c.newFte > 0.02
+      ? `Social Work is ${word} for ${s.year} — <b>${r2(c.newFte)} more FTE</b> to hold its share of ED coverage.`
+      : `Social Work is ${word} for ${s.year} — <b>no additional FTE</b> needed.`;
+
+    $("demDetail").textContent = s.pol==="B"
+      ? `4.4% share of ${r0(c.callable)} callable ED patients/wk`
+      : `held flat at the 2026 baseline`;
+    $("demVal").textContent = r0(c.target);
+    $("supDetail").textContent = `${r1(s.fte)} FTE × ${s.cases} cases/day × ${s.days} days = ${r0(c.rate)}/wk each`;
+    $("supVal").textContent = r0(c.capacity);
+    $("utilVal").textContent = r0(util*100) + "%";
+    $("utilVal").style.color = color;
+
+    const trackMax = c.capacity>0 ? c.capacity/0.70 : 100;
+    $("fill").style.width = Math.min(c.target/trackMax*100,100) + "%";
+    $("fill").style.background = color;
+    $("barDem").textContent = r0(c.target);
+    $("barSup").textContent = r0(c.capacity);
+
+    $("teamStat").innerHTML = `Each SW FTE covers <b>${r0(c.rate)} ED calls/wk</b>. At <b>${r1(s.fte)} FTE</b> the team covers <b>${r0(c.capacity)}/wk</b>; ` +
+      `${s.year} needs <b>${r0(c.target)}/wk</b> — requiring <b>${r2(c.fteNeeded)} FTE</b>.`;
+
+    // chart: ED callable/wk with SW capacity line
+    const maxV = Math.max(...[2026,2027,2028].map(edCallable));
+    $("bars").innerHTML = [2026,2027,2028].map(y=>{
+      const cc = calc(y), v = cc.callable;
+      const swPct = cc.target / v * 100;
+      return `<div class="bcol"><span class="lab">${r0(v)}</span>`+
+             `<div class="bar ${y===s.year?'cur':''}" style="height:${v/maxV*100}%">`+
+             `<div class="capmark" style="bottom:${swPct}%"><span>SW ${r0(cc.target)}</span></div>`+
+             `</div></div>`;
+    }).join("");
+
+    const g = (edCallable(2028)/edCallable(2026)-1)*100;
+    $("trendNote").innerHTML = `Callable ED volume grows from <b>${r0(edCallable(2026))}</b> to <b>${r0(edCallable(2028))}</b> patients/week by 2028 — <b>+${r1(g)}%</b>. ` +
+      (s.pol==="B"
+        ? `Holding SW's share steady means growing to <b>${r2(calc(2028).fteNeeded)} FTE</b> — a fractional ask, but the red line tracks volume instead of falling behind it.`
+        : `With SW frozen at <b>${r0(BASE_ABS)}</b> calls/wk, its share falls from <b>4.4%</b> to <b>${r1(BASE_ABS/edCallable(2028)*100)}%</b> — the RN team quietly absorbs the difference.`);
+
+    // RN knock-on
+    const c28 = calc(2028);
+    const deltaCalls = c.target - BASE_ABS;
+    const rnHrs = deltaCalls / ED_RATE;
+    $("rnStat").innerHTML = s.pol==="B"
+      ? `Every ED call SW takes is one the RN team doesn't staff for. In ${s.year}, SW covering <b>${r0(c.target)}</b> instead of the flat <b>60</b> saves the RN team <b>${r1(rnHrs)} hrs/wk</b> — about <b>${r2(rnHrs/FT_H)} RN FTE</b>. By 2028 that reaches <b>${r2((c28.target-BASE_ABS)/ED_RATE/FT_H)} RN FTE</b>.`
+      : `Freezing SW pushes the work sideways. By 2028 the RN team absorbs <b>${r0(c28.callable*SHARE - BASE_ABS)}</b> more ED calls/wk than under the scaled policy — roughly <b>${r2((c28.callable*SHARE-BASE_ABS)/ED_RATE/FT_H)} RN FTE</b>. <b>The ask doesn't disappear; it moves to a more expensive team.</b>`;
+  }
+
+  function bind(id,key,vid,dec){
+    $(id).addEventListener("input",e=>{
+      s[key]=parseFloat(e.target.value);
+      $(vid).textContent = dec!==undefined ? s[key].toFixed(dec) : s[key];
+      render();
+    });
+  }
+  bind("fte","fte","vFte",1); bind("cases","cases","vCases"); bind("days","days","vDays");
+
+  document.querySelectorAll("#yearSeg button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#yearSeg button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); s.year=parseInt(b.dataset.y); render();
+  }));
+  document.querySelectorAll("#polSeg button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#polSeg button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); s.pol=b.dataset.p;
+    $("polHint").textContent = s.pol==="B"
+      ? "SW grows to hold its 4.4% share of ED coverage as volume rises."
+      : "SW headcount frozen. The RN team absorbs all ED volume growth.";
+    render();
+  }));
+  document.querySelectorAll(".marks span").forEach(m=>m.addEventListener("click",()=>{
+    if(m.dataset.c){ s.cases=parseFloat(m.dataset.c); $("cases").value=s.cases; $("vCases").textContent=s.cases; }
+    if(m.dataset.d){ s.days=parseFloat(m.dataset.d); $("days").value=s.days; $("vDays").textContent=s.days; }
+    render();
+  }));
+
+  render();
+</script>
+</body>
+</html>
